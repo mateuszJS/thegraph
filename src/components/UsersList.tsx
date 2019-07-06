@@ -4,6 +4,7 @@ import InfiniteLoader from 'react-window-infinite-loader'
 import { IUser } from '../queries/users'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import messages from '../messages';
+import { getEthBalance } from '../utils';
 
 interface IProps {
   users: IUser[]
@@ -28,7 +29,11 @@ const UsersList: React.FC<IProps> = ({
 
   const renderItem = useCallback(
     ({ index, style }: { index: number, style: React.CSSProperties }) => {
-      const content = !isItemLoaded(index) ? messages.loading : users[index].id
+      if (!isItemLoaded(index)) {
+        return <div style={style}>{messages.loading}</div>
+      }
+      const user = users[index]
+      const content = `${user.id} : ${getEthBalance(user.exchangeBalances)}`
       return <div style={style}>{content}</div>
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
