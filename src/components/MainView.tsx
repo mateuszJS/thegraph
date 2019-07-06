@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { graphql, ChildDataProps } from 'react-apollo'
 import styled from 'styled-components'
 import UsersList from './UsersList'
 import USERS_QUERY, { UsersQueryData, UsersQueryVars } from '../queries/users'
+import TransactionsList from './TransactionsList';
 
 const Wrapper = styled.div`
   flex-grow: 1;
@@ -27,7 +28,11 @@ const withUsers = graphql<
 const MainView: React.FC<ChildProps> = ({ data: queryProps }) => {
   const { users, loading, error, fetchMore } = queryProps
   const [skipValue, setSkipValue] = useState(initNumberOfItemsToSkip)
-  const [hasNextItem, setHasNextItem] = useState(true)
+  const [
+    areShownTransactions,
+    setAreShownTransactions,
+  ] = useState<null | string>(null)
+  const [hasNextItem, setHasNextItem] = useState(false)
 
   useEffect(() => {
     // INFO: Apollo send first request by itself,
@@ -50,6 +55,14 @@ const MainView: React.FC<ChildProps> = ({ data: queryProps }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skipValue])
 
+  const getMoreData = useCallback(
+    () => setSkipValue(skipValue + perPage),
+    [skipValue],
+  )
+
+  const showTransactions = (userId: string) => setAreShownTransactions(userId)
+  const hideTransactions = () => setAreShownTransactions(null)
+
   if (error) {
     return <p>Error occure {error}</p>
   }
@@ -60,11 +73,16 @@ const MainView: React.FC<ChildProps> = ({ data: queryProps }) => {
 
   return (
     <Wrapper>
+      <TransactionsList
+        userId={areShownTransactions}
+        hideTransactions={hideTransactions}
+      />
       <UsersList
         users={users}
-        getMoreData={() => setSkipValue(skipValue + perPage)}
+        getMoreData={getMoreData}
         isLoading={loading}
         hasNextItem={hasNextItem}
+        handleRowClick={showTransactions}
       />
     </Wrapper>
   )
