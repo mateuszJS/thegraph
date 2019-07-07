@@ -3,14 +3,14 @@ import gql from 'graphql-tag'
 export interface ITransaction {
   id: string
   ethAmount: string
-  __typename: string
+  __typename: 'Transaction'
 }
 
-export interface TransactionsQueryData {
+export interface ITransactionsQueryData {
   transactions: ITransaction[]
 }
 
-export interface TransactionsQueryVars {
+export interface ITransactionsQueryVars {
   id: string
 }
 

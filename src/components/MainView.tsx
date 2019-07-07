@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { graphql, ChildDataProps } from 'react-apollo'
 import styled from 'styled-components'
 import UsersList from './UsersList'
-import USERS_QUERY, { UsersQueryData, UsersQueryVars } from '../queries/users'
+import USERS_QUERY, { IUsersQueryData, IUsersQueryVars } from '../queries/users'
 import TransactionsList from './TransactionsList'
 
 const Wrapper = styled.div`
@@ -11,13 +11,13 @@ const Wrapper = styled.div`
 
 const initNumberOfItemsToSkip = 0
 
-type ChildProps = ChildDataProps<{}, UsersQueryData, UsersQueryVars>
+type ChildProps = ChildDataProps<{}, IUsersQueryData, IUsersQueryVars>
 
 const perPage = 30
 const withUsers = graphql<
   {},
-  UsersQueryData,
-  UsersQueryVars,
+  IUsersQueryData,
+  IUsersQueryVars,
   ChildProps
 >(USERS_QUERY, {
   options: () => ({

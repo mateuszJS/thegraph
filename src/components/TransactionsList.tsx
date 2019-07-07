@@ -12,8 +12,8 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import ListItemText from '@material-ui/core/ListItemText'
 import TRANSACTIONS_QUERY,
 {
-  TransactionsQueryData,
-  TransactionsQueryVars,
+  ITransactionsQueryData,
+  ITransactionsQueryVars,
 } from '../queries/transactions'
 import messages from '../messages'
 
@@ -29,7 +29,7 @@ const getContent = ({
   data,
   error,
   loading,
-}: QueryResult<TransactionsQueryData, TransactionsQueryVars>) => {
+}: QueryResult<ITransactionsQueryData, ITransactionsQueryVars>) => {
 
   if (loading) {
     return (
@@ -72,7 +72,7 @@ const TransactionsList: React.FC<IProps> = ({ userId, hideTransactions }) => (
       {messages.transactionsTitle}
     </DialogTitle>
     <DialogContent>
-      <Query<TransactionsQueryData, TransactionsQueryVars>
+      <Query<ITransactionsQueryData, ITransactionsQueryVars>
         query={TRANSACTIONS_QUERY}
         variables={{ id: userId || '' }}
       >

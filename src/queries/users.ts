@@ -3,20 +3,20 @@ import gql from 'graphql-tag'
 export interface IExchangeBalance {
   ethSold: string
   ethBought: string
-  __typename: string
+  __typename: 'UserExchangeData'
 }
 
 export interface IUser {
   id: string
   exchangeBalances: IExchangeBalance[]
-  __typename: string
+  __typename: 'User'
 }
 
-export interface UsersQueryData {
+export interface IUsersQueryData {
   users: IUser[]
 }
 
-export interface UsersQueryVars {
+export interface IUsersQueryVars {
   skip?: number
   first?: number
 }

@@ -31,11 +31,13 @@ const NumberFormatCustom: React.FC<NumberFormatCustomProps> = ({
       getInputRef={inputRef}
       onValueChange={onValueChange}
       thousandSeparator
+      allowNegative={false}
     />
   )
 }
 
 interface IProps {
+  disabled: boolean
   fullWidth: boolean
   name: string,
   value: string,
@@ -47,6 +49,7 @@ const AmountInput: React.FC<IProps> = ({
   onChange,
   name,
   fullWidth,
+  disabled,
 }) => (
     <TextField
       className="formControl"
@@ -55,6 +58,7 @@ const AmountInput: React.FC<IProps> = ({
       onChange={onChange}
       name={name}
       fullWidth={fullWidth}
+      disabled={disabled}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">

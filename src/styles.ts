@@ -4,6 +4,7 @@ import { DefaultTheme } from 'styled-components'
 export const theme: DefaultTheme = {
   colors: {
     primary: '#393939',
+    overlay: 'rgba(255, 255, 255, 0.5)',
   },
 }
 
