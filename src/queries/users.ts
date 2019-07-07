@@ -3,11 +3,13 @@ import gql from 'graphql-tag'
 export interface IExchangeBalance {
   ethSold: string
   ethBought: string
+  __typename: string
 }
 
 export interface IUser {
   id: string
   exchangeBalances: IExchangeBalance[]
+  __typename: string
 }
 
 export interface UsersQueryData {

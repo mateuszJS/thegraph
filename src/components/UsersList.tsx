@@ -34,14 +34,13 @@ const UsersList: React.FC<IProps> = ({
       if (!isItemLoaded(index)) {
         return <div style={style}>{messages.loading}</div>
       }
-      console.log(users.length, index)
       const user = users[index]
-      const content = `${user.id} : ${getEthBalance(user.exchangeBalances)}`
+      const content = `${user.id} : ${getEthBalance(user.exchangeBalances)}}`
       const onClickHandler = () => handleRowClick(user.id)
       return <div style={style} onClick={onClickHandler}>{content}</div>
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [users],
+    [users, getEthBalance],
   )
 
   return (

@@ -3,7 +3,7 @@ import { graphql, ChildDataProps } from 'react-apollo'
 import styled from 'styled-components'
 import UsersList from './UsersList'
 import USERS_QUERY, { UsersQueryData, UsersQueryVars } from '../queries/users'
-import TransactionsList from './TransactionsList';
+import TransactionsList from './TransactionsList'
 
 const Wrapper = styled.div`
   flex-grow: 1;
@@ -32,7 +32,7 @@ const MainView: React.FC<ChildProps> = ({ data: queryProps }) => {
     areShownTransactions,
     setAreShownTransactions,
   ] = useState<null | string>(null)
-  const [hasNextItem, setHasNextItem] = useState(false)
+  const [hasNextItem, setHasNextItem] = useState(true)
 
   useEffect(() => {
     // INFO: Apollo send first request by itself,
