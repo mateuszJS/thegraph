@@ -7,13 +7,16 @@
     "interface-name": false,
     "ordered-imports": false,
     "no-console": false,
-    "jsx-no-lambda": false,
     "object-literal-sort-keys": false,
     "curly": false,
     "no-empty": false,
     "max-line-length": [true, 80],
-    "semicolon": false,
+    "semicolon": [true, "never"],
     "quotemark": [true, "single", "jsx-double"],
-    "jsx-no-multiline-js": false
+    "jsx-no-multiline-js": false,
+    "jsx-wrap-multiline": false,
+    "jsx-boolean-value": false,
+    "arrow-parens": ["error", "as-needed"],
+    "no-unused-vars": "error"
   }
 }

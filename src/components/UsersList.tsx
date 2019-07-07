@@ -3,13 +3,15 @@ import { FixedSizeList } from 'react-window'
 import InfiniteLoader from 'react-window-infinite-loader'
 import { IUser } from '../queries/users'
 import AutoSizer from 'react-virtualized-auto-sizer'
-import messages from '../messages';
+import messages from '../messages'
+import { getEthBalance } from '../utils'
 
 interface IProps {
   users: IUser[]
   getMoreData: VoidFunction
   isLoading: boolean
   hasNextItem: boolean
+  handleRowClick(id: string): void
 }
 
 const UsersList: React.FC<IProps> = ({
@@ -17,6 +19,7 @@ const UsersList: React.FC<IProps> = ({
   getMoreData,
   isLoading,
   hasNextItem,
+  handleRowClick,
 }) => {
   const itemCount = hasNextItem ? users.length + 1 : users.length
   const loadMoreItems = (isLoading ? () => { } : getMoreData) as unknown as (
@@ -28,8 +31,13 @@ const UsersList: React.FC<IProps> = ({
 
   const renderItem = useCallback(
     ({ index, style }: { index: number, style: React.CSSProperties }) => {
-      const content = !isItemLoaded(index) ? messages.loading : users[index].id
-      return <div style={style}>{content}</div>
+      if (!isItemLoaded(index)) {
+        return <div style={style}>{messages.loading}</div>
+      }
+      const user = users[index]
+      const content = `${user.id} : ${getEthBalance(user.exchangeBalances)}}`
+      const onClickHandler = () => handleRowClick(user.id)
+      return <div style={style} onClick={onClickHandler}>{content}</div>
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [users],
