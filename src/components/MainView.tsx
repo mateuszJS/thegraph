@@ -2,8 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { graphql, ChildDataProps } from 'react-apollo'
 import styled from 'styled-components'
 import UsersList from './UsersList'
-import USERS_QUERY, { IUsersQueryData, IUsersQueryVars } from '../queries/users'
 import TransactionsList from './TransactionsList'
+import Header from './Header'
+import Transfer from './Transfer'
+import USERS_QUERY, { IUsersQueryData, IUsersQueryVars } from '../queries/users'
+import messages from '../messages'
+import { numberOfUsersToLoad } from '../config'
 
 const Wrapper = styled.div`
   flex-grow: 1;
@@ -13,7 +17,6 @@ const initNumberOfItemsToSkip = 0
 
 type ChildProps = ChildDataProps<{}, IUsersQueryData, IUsersQueryVars>
 
-const perPage = 30
 const withUsers = graphql<
   {},
   IUsersQueryData,
@@ -25,14 +28,23 @@ const withUsers = graphql<
   }),
 })
 
-const MainView: React.FC<ChildProps> = ({ data: queryProps }) => {
-  const { users, loading, error, fetchMore } = queryProps
+const MainView: React.FC<ChildProps> = ({
+  data: {
+    users,
+    loading,
+    error,
+    fetchMore,
+  }
+}) => {
   const [skipValue, setSkipValue] = useState(initNumberOfItemsToSkip)
   const [
     areShownTransactions,
     setAreShownTransactions,
   ] = useState<null | string>(null)
   const [hasNextItem, setHasNextItem] = useState(true)
+  const [isShownTransfer, setIsShownTransfer] = useState(false)
+  const closeModal = useCallback(() => setIsShownTransfer(false), [])
+  const openModal = useCallback(() => setIsShownTransfer(true), [])
 
   useEffect(() => {
     // INFO: Apollo send first request by itself,
@@ -56,35 +68,38 @@ const MainView: React.FC<ChildProps> = ({ data: queryProps }) => {
   }, [skipValue])
 
   const getMoreData = useCallback(
-    () => setSkipValue(skipValue + perPage),
+    () => setSkipValue(skipValue + numberOfUsersToLoad),
     [skipValue],
   )
 
   const showTransactions = (userId: string) => setAreShownTransactions(userId)
   const hideTransactions = () => setAreShownTransactions(null)
 
-  if (error) {
-    return <p>Error occure {error}</p>
-  }
-
-  if (!users) {
-    return <p>There is no users :(</p>
-  }
-
   return (
-    <Wrapper>
-      <TransactionsList
-        userId={areShownTransactions}
-        hideTransactions={hideTransactions}
-      />
-      <UsersList
-        users={users}
-        getMoreData={getMoreData}
-        isLoading={loading}
-        hasNextItem={hasNextItem}
-        handleRowClick={showTransactions}
-      />
-    </Wrapper>
+    <>
+      <Header openTransferModal={openModal} />
+      <Wrapper>
+        <Transfer
+          isOpen={isShownTransfer}
+          closeModal={closeModal}
+        />
+        <TransactionsList
+          userId={areShownTransactions}
+          hideTransactions={hideTransactions}
+        />
+        {error && <p>{error.message}</p>}
+        {loading && <p>{messages.loading}</p>}
+        {!loading && !error && users && (
+          <UsersList
+            users={users}
+            getMoreData={getMoreData}
+            isLoading={loading}
+            hasNextItem={hasNextItem}
+            handleRowClick={showTransactions}
+          />
+        )}
+      </Wrapper>
+    </>
   )
 }
 

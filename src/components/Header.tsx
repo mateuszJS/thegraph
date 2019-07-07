@@ -15,31 +15,25 @@ const Title = styled.div`
   flex-grow: 1;
 `
 
-const Header = () => {
-  const [isShownTransfer, setIsShownTransfer] = useState(false)
-  const closeModal = useCallback(() => setIsShownTransfer(false), [])
-  const openModal = useCallback(() => setIsShownTransfer(true), [])
-
-  return (
-    <Wrapper>
-      <AppBar position="static" color="default">
-        <Toolbar>
-          <Title>
-            <Typography variant="h6" color="inherit">
-              ETH Explorer
-            </Typography>
-          </Title>
-          <Button color="inherit" onClick={openModal}>
-            {messages.transfer}
-          </Button>
-        </Toolbar>
-      </AppBar>
-      <Transfer
-        isOpen={isShownTransfer}
-        closeModal={closeModal}
-      />
-    </Wrapper>
-  )
+interface IProps {
+  openTransferModal: VoidFunction
 }
+
+const Header: React.FC<IProps> = ({ openTransferModal }) => (
+  <Wrapper>
+    <AppBar position="static" color="default">
+      <Toolbar>
+        <Title>
+          <Typography variant="h6" color="inherit">
+            {messages.appTitle}
+          </Typography>
+        </Title>
+        <Button color="inherit" onClick={openTransferModal}>
+          {messages.transfer}
+        </Button>
+      </Toolbar>
+    </AppBar>
+  </Wrapper>
+)
 
 export default Header

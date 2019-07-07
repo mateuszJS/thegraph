@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import { numberOfUsersToLoad } from '../config'
 
 export interface IExchangeBalance {
   ethSold: string
@@ -21,10 +22,8 @@ export interface IUsersQueryVars {
   first?: number
 }
 
-const perPage = 3
-
 export default gql`
-  query Users_Query($skip: Int = 0, $first: Int = ${perPage}) {
+  query Users_Query($skip: Int = 0, $first: Int = ${numberOfUsersToLoad}) {
     users(skip: $skip, first: $first) {
       id
       exchangeBalances {

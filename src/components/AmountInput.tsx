@@ -14,7 +14,7 @@ const NumberFormatCustom: React.FC<NumberFormatCustomProps> = ({
   inputRef,
   onChange,
   name,
-  ...other
+  ...restProps
 }) => {
   const onValueChange = useCallback((values => {
     onChange({
@@ -27,7 +27,7 @@ const NumberFormatCustom: React.FC<NumberFormatCustomProps> = ({
 
   return (
     <NumberFormat
-      {...other}
+      {...restProps}
       getInputRef={inputRef}
       onValueChange={onValueChange}
       thousandSeparator

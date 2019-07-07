@@ -12,4 +12,5 @@ export default {
   invalidIds: 'Invalid users ids, please make sure you\'ve typed correct id and try again.',
   errorTransaction: 'Transactions cannot be performed before users\'ll be loaded.',
   transferSuccess: 'Transfer finished with success!',
+  appTitle: 'ETH Explorer',
 }
