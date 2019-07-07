@@ -1,23 +1,17 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
 import styled from 'styled-components'
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import TextField from '@material-ui/core/TextField'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Typography from '@material-ui/core/Typography'
+import {
+  Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField,
+  CircularProgress, ErrorText, SuccessText,
+} from '../common'
 import TRANSFER_MUTATION,
 {
   TransferMutationData,
   TransferMutationVars,
-} from '../mutations/transfer'
-import messages from '../messages'
-import AmountInput from './AmountInput'
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
+} from '../../mutations/transfer'
+import messages from '../../messages'
+import AmountInput from '../AmountInput'
 
 const LoaderWrapper = styled.div`
   position: absolute;
@@ -122,16 +116,12 @@ const TransactionsList: React.FC<IProps> = ({ isOpen, closeModal }) => {
                   error &&
                   error.networkError &&
                   error.networkError.message && (
-                    <Typography color="error" style={{ marginTop: '1rem' }}>
-                      {error.networkError.message}
-                    </Typography>
+                    <ErrorText>{error.networkError.message}</ErrorText>
                   )
                 }
                 {
                   called && !loading && !error && (
-                    <Typography style={{ marginTop: '1rem' }}>
-                      {messages.transferSuccess}
-                    </Typography>
+                    <SuccessText>{messages.transferSuccess}</SuccessText>
                   )
                 }
                 {loading && (

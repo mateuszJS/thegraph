@@ -5,6 +5,11 @@ export const theme: DefaultTheme = {
   colors: {
     primary: '#393939',
     overlay: 'rgba(255, 255, 255, 0.5)',
+    success: '#00DD33',
+    error: '#DD0033',
+  },
+  sizes: {
+    headerHeight: '64px',
   },
 }
 

@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { graphql, ChildDataProps } from 'react-apollo'
 import styled from 'styled-components'
-import UsersList from './UsersList'
-import TransactionsList from './TransactionsList'
-import Header from './Header'
-import Transfer from './Transfer'
-import USERS_QUERY, { IUsersQueryData, IUsersQueryVars } from '../queries/users'
-import messages from '../messages'
-import { numberOfUsersToLoad } from '../config'
+import UsersList from '../UsersList'
+import TransactionsList from '../TransactionsList'
+import Header from '../Header'
+import Transfer from '../Transfer'
+import USERS_QUERY, {
+  IUsersQueryData, IUsersQueryVars,
+} from '../../queries/users'
+import messages from '../../messages'
+import { numberOfUsersToLoad } from '../../config'
 
 const Wrapper = styled.div`
   flex-grow: 1;
@@ -34,7 +36,7 @@ const MainView: React.FC<ChildProps> = ({
     loading,
     error,
     fetchMore,
-  }
+  },
 }) => {
   const [skipValue, setSkipValue] = useState(initNumberOfItemsToSkip)
   const [
