@@ -40,7 +40,7 @@ const UsersList: React.FC<IProps> = ({
       return <div style={style} onClick={onClickHandler}>{content}</div>
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [users, getEthBalance],
+    [users],
   )
 
   return (
