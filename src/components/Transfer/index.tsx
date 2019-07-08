@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, FormEvent } from 'react'
 import { Mutation } from 'react-apollo'
 import styled from 'styled-components'
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import {
   Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField,
   CircularProgress, ErrorText, SuccessText,
@@ -28,8 +29,8 @@ const LoaderOverlay = styled(LoaderWrapper)`
   background-color: ${props => props.theme.colors.overlay};
 `
 
-const Form = styled.form`
-  position: relative;
+const InputWrapper = styled.div`
+  padding: 0.5rem 0;
 `
 
 const StyledDialogContent = styled(DialogContent)`
@@ -75,43 +76,49 @@ const TransactionsList: React.FC<IProps> = ({ isOpen, closeModal }) => {
         onCompleted={clearState}
       >
         {(transfer, { loading, error, called }) => {
-          const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault()
+          const onSubmit = () => {
             transfer()
           }
 
           return (
-            <Form onSubmit={onSubmit}>
+            <ValidatorForm onSubmit={onSubmit}>
               <StyledDialogContent>
-                <div>
-                  <TextField
-                    label={messages.transferFrom}
+                <InputWrapper>
+                  <TextValidator
                     name="sender"
+                    label={messages.transferFrom}
                     value={state.sender}
                     onChange={handleChange}
+                    validators={['required']}
+                    errorMessages={[messages.requiredField]}
                     fullWidth
                     disabled={loading}
                   />
-                </div>
-                <div>
-                  <TextField
-                    label={messages.transferTo}
+                </InputWrapper>
+                <InputWrapper>
+                  <TextValidator
                     name="recipient"
+                    label={messages.transferTo}
                     value={state.recipient}
                     onChange={handleChange}
+                    validators={['required']}
+                    errorMessages={[messages.requiredField]}
                     fullWidth
                     disabled={loading}
                   />
-                </div>
-                <div>
+                </InputWrapper>
+                <InputWrapper>
                   <AmountInput
                     name="amount"
+                    label={messages.amount}
                     value={state.amount}
                     onChange={handleChange}
+                    validators={['required']}
+                    errorMessages={[messages.requiredField]}
                     fullWidth
                     disabled={loading}
                   />
-                </div>
+                </InputWrapper>
                 {
                   error &&
                   error.networkError &&
@@ -144,7 +151,7 @@ const TransactionsList: React.FC<IProps> = ({ isOpen, closeModal }) => {
                   {messages.transferAction}
                 </Button>
               </DialogActions>
-            </Form>
+            </ValidatorForm>
           )
         }}
       </Mutation>

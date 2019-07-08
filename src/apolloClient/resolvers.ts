@@ -13,6 +13,7 @@ import TRANSACTIONS_QUERY,
   ITransaction,
 } from '../queries/transactions'
 import messages from '../messages';
+import { evenEthPurchase } from '../consts';
 
 type IApolloClient = ApolloClient<NormalizedCacheObject>
 
@@ -47,7 +48,7 @@ const updateUserTransactionsList = async (
   const newTransaction: ITransaction = {
     id: uuid(),
     ethAmount: `${amount}`,
-    event: 'EthPurchase',
+    event: evenEthPurchase,
     __typename: 'Transaction',
   }
 

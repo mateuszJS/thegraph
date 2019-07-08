@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { numberOfUsersToLoad } from '../config'
+import { numberOfUsersToLoad } from '../consts'
 
 export interface IExchangeBalance {
   ethSold: string

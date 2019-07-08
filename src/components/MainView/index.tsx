@@ -9,7 +9,7 @@ import USERS_QUERY, {
   IUsersQueryData, IUsersQueryVars,
 } from '../../queries/users'
 import messages from '../../messages'
-import { numberOfUsersToLoad } from '../../config'
+import { numberOfUsersToLoad } from '../../consts'
 
 const Wrapper = styled.div`
   flex-grow: 1;

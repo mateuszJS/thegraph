@@ -1,43 +1,27 @@
 import React from 'react'
-import { InputAdornment, TextField } from '../common'
+import { InputAdornment } from '../common'
 import NumberFormatCustom from './NumberFormatCustom'
 import messages from '../../messages'
+import { TextValidator } from 'react-material-ui-form-validator'
 
-interface IProps {
-  disabled: boolean
-  fullWidth: boolean
-  name: string,
-  value: string,
-  onChange(e: React.ChangeEvent<HTMLInputElement>): void
+// NOTE: TextValidator has to be class component (see TS interface)
+class AmountInput extends TextValidator {
+  public render() {
+    return (
+      <TextValidator
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              {messages.ethSymbol}
+            </InputAdornment>
+          ),
+          inputComponent: NumberFormatCustom as any,
+
+        }}
+        {...this.props}
+      />
+    )
+  }
 }
-
-const AmountInput: React.FC<IProps> = ({
-  value,
-  onChange,
-  name,
-  fullWidth,
-  disabled,
-}) => (
-    <TextField
-      className="formControl"
-      label={messages.amount}
-      value={value}
-      onChange={onChange}
-      name={name}
-      fullWidth={fullWidth}
-      disabled={disabled}
-      required
-      error={!value}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            {messages.ethSymbol}
-          </InputAdornment>
-        ),
-        inputComponent: NumberFormatCustom as any,
-
-      }}
-    />
-  )
 
 export default AmountInput

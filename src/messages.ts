@@ -15,4 +15,5 @@ export default {
   appTitle: 'ETH Explorer',
   close: 'Close',
   zeroTransactions: 'User don\'t have any transactions.',
+  requiredField: 'This field is required',
 }
