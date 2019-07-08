@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react'
 import { FixedSizeList } from 'react-window'
 import InfiniteLoader from 'react-window-infinite-loader'
-import { IUser } from '../../queries/users'
 import AutoSizer from 'react-virtualized-auto-sizer'
+import { IUser } from '../../queries/users'
 import messages from '../../messages'
 import { getEthBalance } from '../../utils'
 import { ListItem, ListItemText } from '../common'
@@ -26,7 +26,7 @@ const UsersList: React.FC<IProps> = ({
   const loadMoreItems = (isLoading ? () => { } : getMoreData) as unknown as (
     startIndex: number,
     stopIndex: number,
-  ) => Promise<any>
+  ) => Promise<void>
 
   const isItemLoaded = (index: number) => !hasNextItem || index < users.length
 

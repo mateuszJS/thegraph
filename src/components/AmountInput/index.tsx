@@ -1,8 +1,8 @@
 import React from 'react'
+import { TextValidator } from 'react-material-ui-form-validator'
 import { InputAdornment } from '../common'
 import NumberFormatCustom from './NumberFormatCustom'
 import messages from '../../messages'
-import { TextValidator } from 'react-material-ui-form-validator'
 
 // NOTE: TextValidator has to be class component (see TS interface)
 class AmountInput extends TextValidator {

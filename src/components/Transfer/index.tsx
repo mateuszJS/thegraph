@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Mutation } from 'react-apollo'
 import { Dialog, DialogTitle } from '../common'
 import TRANSFER_MUTATION,
@@ -23,20 +23,25 @@ const initialState = {
 
 const TransactionsList: React.FC<IProps> = ({ isOpen, closeModal }) => {
   const [state, setState] = useState(initialState)
-  const handleChange = (
+  const handleChange = useCallback((
     { target: { value, name } }: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setState({
       ...state,
       [name]: value,
     })
-  }
-  const clearState = () => setState(initialState)
+  }, [state])
+  const clearState = useCallback(() => setState(initialState), [setState])
+  const handleOnCloseModal = useCallback(() => {
+    clearState()
+    closeModal()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [closeModal, clearState])
 
   return (
     <Dialog
       open={isOpen}
-      onClose={closeModal}
+      onClose={handleOnCloseModal}
       fullWidth
       maxWidth="sm"
     >
@@ -51,7 +56,7 @@ const TransactionsList: React.FC<IProps> = ({ isOpen, closeModal }) => {
             {...result}
             state={state}
             transfer={transfer}
-            closeModal={closeModal}
+            closeModal={handleOnCloseModal}
             handleChange={handleChange}
           />
         )}

@@ -39,13 +39,13 @@ const MainView: React.FC<ChildProps> = ({
     fetchMore,
   },
 }) => {
-  const [skipValue, setSkipValue] = useState(initNumberOfItemsToSkip)
   const [
     areShownTransactions,
     setAreShownTransactions,
   ] = useState<null | string>(null)
   const [hasNextItem, setHasNextItem] = useState(true)
   const [isShownTransfer, setIsShownTransfer] = useState(false)
+  const [skipValue, setSkipValue] = useState(initNumberOfItemsToSkip)
 
   useEffect(() => {
     // INFO: Apollo send first request by itself,

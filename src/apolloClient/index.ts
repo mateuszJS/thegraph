@@ -4,6 +4,7 @@ import { HttpLink } from 'apollo-link-http'
 import { onError } from 'apollo-link-error'
 import { ApolloLink } from 'apollo-link'
 import resolvers from './resolvers'
+import { endpoint } from '../consts'
 
 const apolloClient = new ApolloClient({
   link: ApolloLink.from([
@@ -18,7 +19,7 @@ const apolloClient = new ApolloClient({
       if (networkError) console.log(`[Network error]: ${networkError}`)
     }),
     new HttpLink({
-      uri: 'https://api.thegraph.com/subgraphs/name/graphprotocol/uniswap',
+      uri: endpoint,
       credentials: 'same-origin',
     }),
   ]),
