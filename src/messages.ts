@@ -13,4 +13,7 @@ export default {
   errorTransaction: 'Transactions cannot be performed before users\'ll be loaded.',
   transferSuccess: 'Transfer finished with success!',
   appTitle: 'ETH Explorer',
+  close: 'Close',
+  zeroTransactions: 'User don\'t have any transactions.',
+  requiredField: 'This field is required',
 }

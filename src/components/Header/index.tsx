@@ -1,14 +1,10 @@
-import React, { useState, useCallback } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
-import Transfer from './Transfer'
-import messages from '../messages'
+import { AppBar, Toolbar, Typography, Button } from '../common'
+import messages from '../../messages'
 
 const Wrapper = styled.div`
-  height: 64px;
+  height: ${props => props.theme.sizes.headerHeight};
 `
 
 const Title = styled.div`

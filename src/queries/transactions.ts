@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 export interface ITransaction {
   id: string
   ethAmount: string
+  event: string
   __typename: 'Transaction'
 }
 
@@ -21,6 +22,7 @@ export default gql`
     }) {
       id
       ethAmount
+      event
     }
   }
 `

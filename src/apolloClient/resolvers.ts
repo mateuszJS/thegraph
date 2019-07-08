@@ -1,5 +1,6 @@
 import ApolloClient, { Resolvers } from 'apollo-client'
 import { NormalizedCacheObject } from 'apollo-cache-inmemory'
+import uuid from 'uuid/v4'
 import USERS_QUERY, { IUsersQueryData } from '../queries/users'
 import USER_QUERY,
 {
@@ -12,6 +13,7 @@ import TRANSACTIONS_QUERY,
   ITransaction,
 } from '../queries/transactions'
 import messages from '../messages';
+import { evenEthPurchase } from '../consts';
 
 type IApolloClient = ApolloClient<NormalizedCacheObject>
 
@@ -44,8 +46,9 @@ const updateUserTransactionsList = async (
 ) => {
   const transactionsData = await getTransactionsData(client, id)
   const newTransaction: ITransaction = {
-    id: `${Math.random()}`,
+    id: uuid(),
     ethAmount: `${amount}`,
+    event: evenEthPurchase,
     __typename: 'Transaction',
   }
 

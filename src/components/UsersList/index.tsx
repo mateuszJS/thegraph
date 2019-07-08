@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react'
 import { FixedSizeList } from 'react-window'
 import InfiniteLoader from 'react-window-infinite-loader'
-import { IUser } from '../queries/users'
+import { IUser } from '../../queries/users'
 import AutoSizer from 'react-virtualized-auto-sizer'
-import messages from '../messages'
-import { getEthBalance } from '../utils'
+import messages from '../../messages'
+import { getEthBalance } from '../../utils'
 
 interface IProps {
   users: IUser[]

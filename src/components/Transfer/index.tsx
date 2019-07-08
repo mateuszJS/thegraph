@@ -1,23 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, FormEvent } from 'react'
 import { Mutation } from 'react-apollo'
 import styled from 'styled-components'
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import TextField from '@material-ui/core/TextField'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Typography from '@material-ui/core/Typography'
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
+import {
+  Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField,
+  CircularProgress, ErrorText, SuccessText,
+} from '../common'
 import TRANSFER_MUTATION,
 {
   TransferMutationData,
   TransferMutationVars,
-} from '../mutations/transfer'
-import messages from '../messages'
-import AmountInput from './AmountInput'
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
+} from '../../mutations/transfer'
+import messages from '../../messages'
+import AmountInput from '../AmountInput'
 
 const LoaderWrapper = styled.div`
   position: absolute;
@@ -34,8 +29,8 @@ const LoaderOverlay = styled(LoaderWrapper)`
   background-color: ${props => props.theme.colors.overlay};
 `
 
-const Form = styled.form`
-  position: relative;
+const InputWrapper = styled.div`
+  padding: 0.5rem 0;
 `
 
 const StyledDialogContent = styled(DialogContent)`
@@ -81,57 +76,59 @@ const TransactionsList: React.FC<IProps> = ({ isOpen, closeModal }) => {
         onCompleted={clearState}
       >
         {(transfer, { loading, error, called }) => {
-          const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault()
+          const onSubmit = () => {
             transfer()
           }
 
           return (
-            <Form onSubmit={onSubmit}>
+            <ValidatorForm onSubmit={onSubmit}>
               <StyledDialogContent>
-                <div>
-                  <TextField
-                    label={messages.transferFrom}
+                <InputWrapper>
+                  <TextValidator
                     name="sender"
+                    label={messages.transferFrom}
                     value={state.sender}
                     onChange={handleChange}
+                    validators={['required']}
+                    errorMessages={[messages.requiredField]}
                     fullWidth
                     disabled={loading}
                   />
-                </div>
-                <div>
-                  <TextField
-                    label={messages.transferTo}
+                </InputWrapper>
+                <InputWrapper>
+                  <TextValidator
                     name="recipient"
+                    label={messages.transferTo}
                     value={state.recipient}
                     onChange={handleChange}
+                    validators={['required']}
+                    errorMessages={[messages.requiredField]}
                     fullWidth
                     disabled={loading}
                   />
-                </div>
-                <div>
+                </InputWrapper>
+                <InputWrapper>
                   <AmountInput
                     name="amount"
+                    label={messages.amount}
                     value={state.amount}
                     onChange={handleChange}
+                    validators={['required']}
+                    errorMessages={[messages.requiredField]}
                     fullWidth
                     disabled={loading}
                   />
-                </div>
+                </InputWrapper>
                 {
                   error &&
                   error.networkError &&
                   error.networkError.message && (
-                    <Typography color="error" style={{ marginTop: '1rem' }}>
-                      {error.networkError.message}
-                    </Typography>
+                    <ErrorText>{error.networkError.message}</ErrorText>
                   )
                 }
                 {
                   called && !loading && !error && (
-                    <Typography style={{ marginTop: '1rem' }}>
-                      {messages.transferSuccess}
-                    </Typography>
+                    <SuccessText>{messages.transferSuccess}</SuccessText>
                   )
                 }
                 {loading && (
@@ -154,7 +151,7 @@ const TransactionsList: React.FC<IProps> = ({ isOpen, closeModal }) => {
                   {messages.transferAction}
                 </Button>
               </DialogActions>
-            </Form>
+            </ValidatorForm>
           )
         }}
       </Mutation>

@@ -5,6 +5,11 @@ declare module 'styled-components' {
     colors: {
       primary: string
       overlay: string
+      success: string
+      error: string
+    },
+    sizes: {
+      headerHeight: string
     }
   }
 }
