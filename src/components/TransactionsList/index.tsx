@@ -11,13 +11,13 @@ import messages from '../../messages'
 
 interface IProps {
   userId: string | null
-  hideTransactions: VoidFunction
+  closeModal: VoidFunction
 }
 
-const TransactionsList: React.FC<IProps> = ({ userId, hideTransactions }) => (
+const TransactionsList: React.FC<IProps> = ({ userId, closeModal }) => (
   <Dialog
     open={!!userId}
-    onClose={hideTransactions}
+    onClose={closeModal}
     aria-labelledby="alert-dialog-title"
     aria-describedby="alert-dialog-description"
     fullWidth
@@ -35,7 +35,7 @@ const TransactionsList: React.FC<IProps> = ({ userId, hideTransactions }) => (
       </Query>
     </DialogContent>
     <DialogActions>
-      <Button onClick={hideTransactions} color="primary" autoFocus>
+      <Button onClick={closeModal} color="primary" autoFocus>
         {messages.close}
       </Button>
     </DialogActions>

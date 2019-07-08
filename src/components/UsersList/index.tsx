@@ -5,6 +5,7 @@ import { IUser } from '../../queries/users'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import messages from '../../messages'
 import { getEthBalance } from '../../utils'
+import { ListItem, ListItemText } from '../common'
 
 interface IProps {
   users: IUser[]
@@ -32,12 +33,30 @@ const UsersList: React.FC<IProps> = ({
   const renderItem = useCallback(
     ({ index, style }: { index: number, style: React.CSSProperties }) => {
       if (!isItemLoaded(index)) {
-        return <div style={style}>{messages.loading}</div>
+        return (
+          <ListItem style={style}>
+            <ListItemText primary={messages.loading} />
+          </ListItem>
+        )
       }
+
       const user = users[index]
-      const content = `${user.id} : ${getEthBalance(user.exchangeBalances)}}`
       const onClickHandler = () => handleRowClick(user.id)
-      return <div style={style} onClick={onClickHandler}>{content}</div>
+
+      return (
+        <ListItem
+          key={user.id}
+          divider
+          button
+          style={style}
+          onClick={onClickHandler}
+        >
+          <ListItemText
+            primary={user.id}
+            secondary={getEthBalance(user.exchangeBalances)}
+          />
+        </ListItem>
+      )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [users],
@@ -57,7 +76,7 @@ const UsersList: React.FC<IProps> = ({
               onItemsRendered={onItemsRendered}
               ref={ref}
               itemCount={users.length + 1}
-              itemSize={40}
+              itemSize={73}
               height={height}
               width={width}
             >
