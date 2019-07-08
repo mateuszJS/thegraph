@@ -12,10 +12,10 @@ const Title = styled.div`
 `
 
 interface IProps {
-  openTransferModal: VoidFunction
+  showTransfer: VoidFunction
 }
 
-const Header: React.FC<IProps> = ({ openTransferModal }) => (
+const Header: React.FC<IProps> = ({ showTransfer }) => (
   <Wrapper>
     <AppBar position="static" color="default">
       <Toolbar>
@@ -24,7 +24,7 @@ const Header: React.FC<IProps> = ({ openTransferModal }) => (
             {messages.appTitle}
           </Typography>
         </Title>
-        <Button color="inherit" onClick={openTransferModal}>
+        <Button color="inherit" onClick={showTransfer}>
           {messages.transfer}
         </Button>
       </Toolbar>

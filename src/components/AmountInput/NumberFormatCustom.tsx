@@ -3,8 +3,8 @@ import NumberFormat from 'react-number-format'
 
 interface IProps {
   name: string
-  inputRef: (instance: NumberFormat | null) => void
-  onChange: (event: { target: { value: string, name: string } }) => void
+  inputRef(instance: NumberFormat | null): void
+  onChange(event: { target: { value: string, name: string } }): void
 }
 
 const NumberFormatCustom: React.FC<IProps> = ({

@@ -10,6 +10,7 @@ import USERS_QUERY, {
 } from '../../queries/users'
 import messages from '../../messages'
 import { numberOfUsersToLoad } from '../../consts'
+import { ErrorText, Typography } from '../common'
 
 const Wrapper = styled.div`
   flex-grow: 1;
@@ -45,8 +46,6 @@ const MainView: React.FC<ChildProps> = ({
   ] = useState<null | string>(null)
   const [hasNextItem, setHasNextItem] = useState(true)
   const [isShownTransfer, setIsShownTransfer] = useState(false)
-  const closeModal = useCallback(() => setIsShownTransfer(false), [])
-  const openModal = useCallback(() => setIsShownTransfer(true), [])
 
   useEffect(() => {
     // INFO: Apollo send first request by itself,
@@ -73,25 +72,29 @@ const MainView: React.FC<ChildProps> = ({
     () => setSkipValue(skipValue + numberOfUsersToLoad),
     [skipValue],
   )
-
-  const showTransactions = (userId: string) => setAreShownTransactions(userId)
-  const hideTransactions = () => setAreShownTransactions(null)
+  const hideTransfer = useCallback(() => setIsShownTransfer(false), [])
+  const showTransfer = useCallback(() => setIsShownTransfer(true), [])
+  const hideTransactions = useCallback(() => setAreShownTransactions(null), [])
+  const showTransactions = useCallback(
+    (userId: string) => setAreShownTransactions(userId),
+    [],
+  )
 
   return (
     <>
-      <Header openTransferModal={openModal} />
+      <Header showTransfer={showTransfer} />
       <Wrapper>
         <Transfer
           isOpen={isShownTransfer}
-          closeModal={closeModal}
+          closeModal={hideTransfer}
         />
         <TransactionsList
           userId={areShownTransactions}
-          hideTransactions={hideTransactions}
+          closeModal={hideTransactions}
         />
-        {error && <p>{error.message}</p>}
-        {loading && <p>{messages.loading}</p>}
-        {!loading && !error && users && (
+        {error && <ErrorText>{error.message}</ErrorText>}
+        {loading && <Typography>{messages.loading}</Typography>}
+        {users && (
           <UsersList
             users={users}
             getMoreData={getMoreData}

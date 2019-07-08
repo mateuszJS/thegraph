@@ -13,7 +13,9 @@ import messages from '../../messages'
 const LoaderWrapper = styled.div`
   text-align: center;
 `
-const { amount, ethSymbol, zeroTransactions } = messages
+
+const getDetails = (ethAmount: string) =>
+  `${messages.amount}: ${ethAmount}  ${messages.ethSymbol}`
 
 const renderContent = ({
   data,
@@ -31,18 +33,20 @@ const renderContent = ({
     return <ErrorText>{error.message}</ErrorText>
   }
   if (data && data.transactions.length) {
-    return data.transactions.map(({ id, event, ethAmount }) => (
-      <List key={id}>
-        <ListItem divider>
-          <ListItemText
-            primary={event}
-            secondary={`${amount}: ${ethAmount}  ${ethSymbol}`}
-          />
-        </ListItem>
+    return (
+      <List>
+        {data.transactions.map(({ id, event, ethAmount }) => (
+          <ListItem divider key={id}>
+            <ListItemText
+              primary={event}
+              secondary={getDetails(ethAmount)}
+            />
+          </ListItem>
+        ))}
       </List>
-    ))
+    )
   }
-  return <Typography>{zeroTransactions}</Typography>
+  return <Typography>{messages.zeroTransactions}</Typography>
 }
 
 export default renderContent
