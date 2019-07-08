@@ -8,12 +8,16 @@ import Transfer from '../Transfer'
 import USERS_QUERY, {
   IUsersQueryData, IUsersQueryVars,
 } from '../../queries/users'
-import messages from '../../messages'
 import { numberOfUsersToLoad } from '../../consts'
-import { ErrorText, Typography } from '../common'
+import { ErrorText, CircularProgress } from '../common'
 
 const Wrapper = styled.div`
   flex-grow: 1;
+`
+
+const LoadingWrapper = styled.div`
+  padding: 2rem;
+  text-align: center;
 `
 
 const initNumberOfItemsToSkip = 0
@@ -93,7 +97,11 @@ const MainView: React.FC<ChildProps> = ({
           closeModal={hideTransactions}
         />
         {error && <ErrorText>{error.message}</ErrorText>}
-        {loading && <Typography>{messages.loading}</Typography>}
+        {loading && (
+          <LoadingWrapper>
+            <CircularProgress />
+          </LoadingWrapper>
+        )}
         {users && (
           <UsersList
             users={users}
