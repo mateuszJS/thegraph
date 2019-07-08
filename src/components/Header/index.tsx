@@ -1,15 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
-import { AppBar, Toolbar, Typography, Button } from '../common'
+import { AppBar, Typography } from '../common'
 import messages from '../../messages'
-
-const Wrapper = styled.div`
-  height: ${props => props.theme.sizes.headerHeight};
-`
-
-const Title = styled.div`
-  flex-grow: 1;
-`
+import { StyledToolbar, Wrapper, Title, StyledButton } from './styled'
 
 interface IProps {
   showTransfer: VoidFunction
@@ -17,17 +9,17 @@ interface IProps {
 
 const Header: React.FC<IProps> = ({ showTransfer }) => (
   <Wrapper>
-    <AppBar position="static" color="default">
-      <Toolbar>
+    <AppBar position="static">
+      <StyledToolbar>
         <Title>
           <Typography variant="h6" color="inherit">
             {messages.appTitle}
           </Typography>
         </Title>
-        <Button color="inherit" onClick={showTransfer}>
+        <StyledButton onClick={showTransfer}>
           {messages.transfer}
-        </Button>
-      </Toolbar>
+        </StyledButton>
+      </StyledToolbar>
     </AppBar>
   </Wrapper>
 )

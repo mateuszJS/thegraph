@@ -18,8 +18,6 @@ const TransactionsList: React.FC<IProps> = ({ userId, closeModal }) => (
   <Dialog
     open={!!userId}
     onClose={closeModal}
-    aria-labelledby="alert-dialog-title"
-    aria-describedby="alert-dialog-description"
     fullWidth
     maxWidth="sm"
   >
@@ -35,7 +33,7 @@ const TransactionsList: React.FC<IProps> = ({ userId, closeModal }) => (
       </Query>
     </DialogContent>
     <DialogActions>
-      <Button onClick={closeModal} color="primary" autoFocus>
+      <Button onClick={closeModal} autoFocus>
         {messages.close}
       </Button>
     </DialogActions>

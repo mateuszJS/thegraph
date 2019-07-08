@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import DialogContent from '@material-ui/core/DialogContent';
+import { styled as styledMaterial } from '@material-ui/styles'
+import { DialogContent, Button } from '../common'
 
 export const LoaderWrapper = styled.div`
   position: absolute;
@@ -22,4 +23,14 @@ export const InputWrapper = styled.div`
 
 export const StyledDialogContent = styled(DialogContent)`
   position: relative;
+`
+
+const WhiteButton = styledMaterial(Button)({
+  color: '#ffffff'
+})
+
+export const SubmitButton = styled(WhiteButton)`
+  background: ${props => props.theme.colors.accent};
+  box-shadow: ${props => props.theme.boxShadow.accent};
+
 `

@@ -7,7 +7,7 @@ import {
 } from '../common'
 import AmountInput from '../AmountInput'
 import {
-  LoaderWrapper, LoaderOverlay, InputWrapper, StyledDialogContent,
+  LoaderWrapper, LoaderOverlay, InputWrapper, StyledDialogContent, SubmitButton,
 } from './styled'
 import messages from '../../messages'
 
@@ -44,6 +44,8 @@ const TransferForm: React.FC<IProps> = ({
     disabled: loading,
   }
   const isShownSuccessMessage = called && !loading && !error
+  const errorMessage = _get(error, 'networkError.message')
+
   return (
     <ValidatorForm onSubmit={onSubmit}>
       <StyledDialogContent>
@@ -71,11 +73,7 @@ const TransferForm: React.FC<IProps> = ({
             {...sharedProps}
           />
         </InputWrapper>
-        {
-          error && _get(error, 'networkError.message') && (
-            <ErrorText>{_get(error, 'networkError.message')}</ErrorText>
-          )
-        }
+        {errorMessage && <ErrorText>{errorMessage}</ErrorText>}
         {
           isShownSuccessMessage && (
             <SuccessText>{messages.transferSuccess}</SuccessText>
@@ -89,17 +87,12 @@ const TransferForm: React.FC<IProps> = ({
         )}
       </StyledDialogContent>
       <DialogActions>
-        <Button onClick={closeModal} color="primary">
+        <Button onClick={closeModal}>
           {messages.cancel}
         </Button>
-        <Button
-          type="submit"
-          disabled={loading}
-          color="primary"
-          autoFocus
-        >
+        <SubmitButton type="submit" disabled={loading} autoFocus>
           {messages.transferAction}
-        </Button>
+        </SubmitButton>
       </DialogActions>
     </ValidatorForm>
   )
