@@ -16,7 +16,6 @@
     "jsx-no-multiline-js": false,
     "jsx-wrap-multiline": false,
     "jsx-boolean-value": false,
-    "arrow-parens": ["error", "as-needed"],
-    "no-unused-vars": "error"
+    "arrow-parens": ["error", "as-needed"]
   }
 }

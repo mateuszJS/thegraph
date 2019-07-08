@@ -26,7 +26,7 @@ export const StyledDialogContent = styled(DialogContent)`
 `
 
 const WhiteButton = styledMaterial(Button)({
-  color: '#ffffff'
+  color: '#ffffff',
 })
 
 export const SubmitButton = styled(WhiteButton)`

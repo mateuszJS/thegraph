@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { FixedSizeList } from 'react-window'
 import InfiniteLoader from 'react-window-infinite-loader'
 import AutoSizer from 'react-virtualized-auto-sizer'
+import styled from 'styled-components'
 import { IUser } from '../../queries/users'
 import messages from '../../messages'
 import { getEthBalance } from '../../utils'
@@ -14,6 +15,13 @@ interface IProps {
   hasNextItem: boolean
   handleRowClick(id: string): void
 }
+
+const ListPrimaryText = styled.p`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0;
+`
 
 const UsersList: React.FC<IProps> = ({
   users,
@@ -52,7 +60,7 @@ const UsersList: React.FC<IProps> = ({
           onClick={onClickHandler}
         >
           <ListItemText
-            primary={user.id}
+            primary={<ListPrimaryText>{user.id}</ListPrimaryText>}
             secondary={getEthBalance(user.exchangeBalances)}
           />
         </ListItem>
