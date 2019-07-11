@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { graphql, ChildDataProps } from 'react-apollo'
 import styled from 'styled-components'
 import UsersList from '../UsersList'
-import TransactionsList from '../TransactionsList'
+import Transactions from '../Transactions'
 import Header from '../Header'
 import Transfer from '../Transfer'
 import USERS_QUERY, {
@@ -72,17 +72,11 @@ const MainView: React.FC<ChildProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [skipValue])
 
-  const getMoreData = useCallback(
-    () => setSkipValue(skipValue + numberOfUsersToLoad),
-    [skipValue],
-  )
-  const hideTransfer = useCallback(() => setIsShownTransfer(false), [])
-  const showTransfer = useCallback(() => setIsShownTransfer(true), [])
-  const hideTransactions = useCallback(() => setAreShownTransactions(null), [])
-  const showTransactions = useCallback(
-    (userId: string) => setAreShownTransactions(userId),
-    [],
-  )
+  const getMoreData = () => setSkipValue(skipValue + numberOfUsersToLoad)
+  const hideTransfer = () => setIsShownTransfer(false)
+  const showTransfer = () => setIsShownTransfer(true)
+  const hideTransactions = () => setAreShownTransactions(null)
+  const showTransactions = (userId: string) => setAreShownTransactions(userId)
 
   return (
     <>
@@ -92,7 +86,7 @@ const MainView: React.FC<ChildProps> = ({
           isOpen={isShownTransfer}
           closeModal={hideTransfer}
         />
-        <TransactionsList
+        <Transactions
           userId={areShownTransactions}
           closeModal={hideTransactions}
         />

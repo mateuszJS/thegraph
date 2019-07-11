@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
-import { Dialog, DialogTitle } from '../common'
+import { Modal } from '../common'
 import TRANSFER_MUTATION,
 {
   TransferMutationData,
@@ -21,31 +21,28 @@ const initialState = {
   amount: '1',
 }
 
-const TransactionsList: React.FC<IProps> = ({ isOpen, closeModal }) => {
+const TransferModal: React.FC<IProps> = ({ isOpen, closeModal }) => {
   const [state, setState] = useState(initialState)
-  const handleChange = useCallback((
+  const handleChange = (
     { target: { value, name } }: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setState({
       ...state,
       [name]: value,
     })
-  }, [state])
-  const clearState = useCallback(() => setState(initialState), [setState])
-  const handleOnCloseModal = useCallback(() => {
+  }
+  const clearState = () => setState(initialState)
+  const handleOnCloseModal = () => {
     clearState()
     closeModal()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [closeModal, clearState])
+  }
 
   return (
-    <Dialog
-      open={isOpen}
-      onClose={handleOnCloseModal}
-      fullWidth
-      maxWidth="sm"
+    <Modal
+      isOpen={isOpen}
+      close={handleOnCloseModal}
+      title={messages.transfer}
     >
-      <DialogTitle>{messages.transfer}</DialogTitle>
       <Mutation<TransferMutationData, TransferMutationVars>
         mutation={TRANSFER_MUTATION}
         variables={state}
@@ -61,8 +58,8 @@ const TransactionsList: React.FC<IProps> = ({ isOpen, closeModal }) => {
           />
         )}
       </Mutation>
-    </Dialog>
+    </Modal>
   )
 }
 
-export default TransactionsList
+export default TransferModal
