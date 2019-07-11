@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react'
-import NumberFormat from 'react-number-format'
+import React from 'react'
+import NumberFormat, { NumberFormatValues } from 'react-number-format'
 
 interface IProps {
   name: string
@@ -13,14 +13,14 @@ const NumberFormatCustom: React.FC<IProps> = ({
   name,
   ...restProps
 }) => {
-  const onValueChange = useCallback((values => {
+  const onValueChange = (values: NumberFormatValues) => {
     onChange({
       target: {
         value: values.value,
         name,
       },
     })
-  }), [onChange, name])
+  }
 
   return (
     <NumberFormat

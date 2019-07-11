@@ -29,7 +29,7 @@ const getTransactionsData = async (client: IApolloClient, id: string) => {
   }
 }
 
-const updateUserTransactionsList = async (
+const updateUserTransactions = async (
   client: IApolloClient,
   id: string,
   amount: number,
@@ -55,4 +55,4 @@ const updateUserTransactionsList = async (
   })
 }
 
-export default updateUserTransactionsList
+export default updateUserTransactions

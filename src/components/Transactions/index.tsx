@@ -6,7 +6,7 @@ import {
 import TRANSACTIONS_QUERY, {
   ITransactionsQueryData, ITransactionsQueryVars,
 } from '../../queries/transactions'
-import renderContent from './renderContent'
+import TransactionsList from './TransactionsList'
 import messages from '../../messages'
 
 interface IProps {
@@ -14,7 +14,7 @@ interface IProps {
   closeModal: VoidFunction
 }
 
-const TransactionsList: React.FC<IProps> = ({ userId, closeModal }) => (
+const Transactions: React.FC<IProps> = ({ userId, closeModal }) => (
   <Dialog
     open={!!userId}
     onClose={closeModal}
@@ -29,7 +29,7 @@ const TransactionsList: React.FC<IProps> = ({ userId, closeModal }) => (
         query={TRANSACTIONS_QUERY}
         variables={{ id: userId || '' }}
       >
-        {renderContent}
+        {results => <TransactionsList {...results} />}
       </Query>
     </DialogContent>
     <DialogActions>
@@ -40,4 +40,4 @@ const TransactionsList: React.FC<IProps> = ({ userId, closeModal }) => (
   </Dialog>
 )
 
-export default TransactionsList
+export default Transactions

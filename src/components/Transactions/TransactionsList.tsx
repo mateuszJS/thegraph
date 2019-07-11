@@ -10,6 +10,8 @@ import {
 } from '../../queries/transactions'
 import messages from '../../messages'
 
+type IProps = QueryResult<ITransactionsQueryData, ITransactionsQueryVars>
+
 const LoaderWrapper = styled.div`
   text-align: center;
 `
@@ -17,11 +19,11 @@ const LoaderWrapper = styled.div`
 const getDetails = (ethAmount: string) =>
   `${messages.amount}: ${ethAmount}  ${messages.ethSymbol}`
 
-const renderContent = ({
+const TransactionsList: React.FC<IProps> = ({
   data,
   error,
   loading,
-}: QueryResult<ITransactionsQueryData, ITransactionsQueryVars>) => {
+}) => {
   if (loading) {
     return (
       <LoaderWrapper>
@@ -49,4 +51,4 @@ const renderContent = ({
   return <Typography>{messages.zeroTransactions}</Typography>
 }
 
-export default renderContent
+export default TransactionsList
