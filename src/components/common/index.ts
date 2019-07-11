@@ -14,6 +14,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import ErrorText from './ErrorText'
 import SuccessText from './SuccessText'
+import Modal from './Modal'
 
 export {
   Button,
@@ -32,4 +33,5 @@ export {
   Typography,
   ErrorText,
   SuccessText,
+  Modal,
 }

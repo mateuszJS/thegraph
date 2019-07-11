@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Mutation } from 'react-apollo'
-import { Dialog, DialogTitle } from '../common'
+import { Modal } from '../common'
 import TRANSFER_MUTATION,
 {
   TransferMutationData,
@@ -38,13 +38,11 @@ const TransferModal: React.FC<IProps> = ({ isOpen, closeModal }) => {
   }
 
   return (
-    <Dialog
-      open={isOpen}
-      onClose={handleOnCloseModal}
-      fullWidth
-      maxWidth="sm"
+    <Modal
+      isOpen={isOpen}
+      close={handleOnCloseModal}
+      title={messages.transfer}
     >
-      <DialogTitle>{messages.transfer}</DialogTitle>
       <Mutation<TransferMutationData, TransferMutationVars>
         mutation={TRANSFER_MUTATION}
         variables={state}
@@ -60,7 +58,7 @@ const TransferModal: React.FC<IProps> = ({ isOpen, closeModal }) => {
           />
         )}
       </Mutation>
-    </Dialog>
+    </Modal>
   )
 }
 

@@ -1,8 +1,6 @@
 import React from 'react'
 import { Query } from 'react-apollo'
-import {
-  Dialog, DialogTitle, DialogContent, DialogActions, Button,
-} from '../common'
+import { DialogContent, DialogActions, Button, Modal } from '../common'
 import TRANSACTIONS_QUERY, {
   ITransactionsQueryData, ITransactionsQueryVars,
 } from '../../queries/transactions'
@@ -15,15 +13,11 @@ interface IProps {
 }
 
 const Transactions: React.FC<IProps> = ({ userId, closeModal }) => (
-  <Dialog
-    open={!!userId}
-    onClose={closeModal}
-    fullWidth
-    maxWidth="sm"
+  <Modal
+    isOpen={!!userId}
+    close={closeModal}
+    title={messages.transactionsTitle}
   >
-    <DialogTitle id="alert-dialog-title">
-      {messages.transactionsTitle}
-    </DialogTitle>
     <DialogContent>
       <Query<ITransactionsQueryData, ITransactionsQueryVars>
         query={TRANSACTIONS_QUERY}
@@ -37,7 +31,7 @@ const Transactions: React.FC<IProps> = ({ userId, closeModal }) => (
         {messages.close}
       </Button>
     </DialogActions>
-  </Dialog>
+  </Modal>
 )
 
 export default Transactions
